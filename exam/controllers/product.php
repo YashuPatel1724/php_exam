@@ -11,13 +11,19 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
     $product_name = $_POST['product_name'];
     $price = $_POST['price'];
 
-    $res = $product->insertProduct($product_name,$price);
-    if($res)
+    if(!empty($product_name) $$ !empty($price))
     {
-        $arr['msg'] = "Data Insert Sucessfully";
+        $res = $product->insertProduct($product_name,$price);
+        if($res)
+        {
+            $arr['msg'] = "Data Insert Sucessfully";
+        }
+        else{
+            $arr['msg'] = "Data Insert Not Sucessfully";
+        }
     }
     else{
-        $arr['msg'] = "Data Insert Not Sucessfully";
+        $arr['error'] = "value is empty";
     }
 }
 else if($_SERVER['REQUEST_METHOD'] == "PUT")
@@ -29,14 +35,20 @@ else if($_SERVER['REQUEST_METHOD'] == "PUT")
     $product_name = $result['product_name'];
     $price = $result['price'];
 
-    $res = $product->updateProduct($id,$product_name,$price);
-
-    if($res)
+    if(!empty($id) && !empty($product_name) && !empty($price))
     {
-        $arr['msg'] = "Data update sucessfully";
-    }
+        $res = $product->updateProduct($id,$product_name,$price);
+
+        if($res)
+        {
+            $arr['msg'] = "Data update sucessfully";
+        }
+        else{
+            $arr['msg'] = "Data not Updated";
+        }
+        }
     else{
-        $arr['msg'] = "Data not Updated";
+        $arr['error'] = "value is empty";
     }
 }
 else

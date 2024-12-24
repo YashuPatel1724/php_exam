@@ -12,13 +12,19 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
     $email = $_POST['email'];
     $phone = $_POST['phone'];
 
-    $res = $user->insertUser($name,$email,$phone);
-    if($res)
+    if(!empty($name) && !empty($email) && !empty($phone))
     {
-        $arr['msg'] = "Data Insert Sucessfully";
+        $res = $user->insertUser($name,$email,$phone);
+        if($res)
+        {
+            $arr['msg'] = "Data Insert Sucessfully";
+        }
+        else{
+            $arr['msg'] = "Data Insert Not Sucessfully";
+        }
     }
-    else{
-        $arr['msg'] = "Data Insert Not Sucessfully";
+    else {
+        $arr['error'] = "valus is empty";
     }
 }
 else if($_SERVER['REQUEST_METHOD'] == "GET")

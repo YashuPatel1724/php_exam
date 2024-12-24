@@ -11,13 +11,19 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
     $order_date = $_POST['order_date'] ;
     $status = $_POST['status'];
 
-    $res = $order->insertOrder($order_date,$status);
-    if($res)
+    if(!empty($order_date) && !empty($status))
     {
-        $arr['msg'] = "Data Insert Sucessfully";
+        $res = $order->insertOrder($order_date,$status);
+        if($res)
+        {
+            $arr['msg'] = "Data Insert Sucessfully";
+        }
+        else{
+            $arr['msg'] = "Data Insert Not Sucessfully";
+        }
     }
     else{
-        $arr['msg'] = "Data Insert Not Sucessfully";
+        $arr['error'] = "value is empty";
     }
 }
 else if($_SERVER['REQUEST_METHOD'] == "DELETE")
@@ -26,13 +32,19 @@ else if($_SERVER['REQUEST_METHOD'] == "DELETE")
     parse_str($data,$result);
     $id = $result['id'];
 
-    $res = $order->deleteOrder($id);
-    if($res)
+    if(!empty($id))
     {
-        $arr['msg'] = "Data Delete Sucessfully";
+        $res = $order->deleteOrder($id);
+        if($res)
+        {
+            $arr['msg'] = "Data Delete Sucessfully";
+        }
+        else{
+            $arr['msg'] = "Data not Deleted Sucessfully";
+        }
     }
     else{
-        $arr['msg'] = "Data not Deleted Sucessfully";
+        $arr['error'] = "value is empty";
     }
 }
 else
